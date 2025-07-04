@@ -8,7 +8,7 @@ import { sendMailAction } from "@/app/send-mail";
 const MessageMe = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,6 +32,7 @@ const MessageMe = () => {
 
     startTransition(() => {
       sendMailAction(form).then((res) => {
+        console.log(isPending);
         if (res.success) {
           setIsSubmitting(false);
           setIsSubmitted(true);
