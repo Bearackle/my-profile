@@ -1,14 +1,11 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-import { sendMailAction } from "@/app/send-mail";
 
 const MessageMe = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [isPending, startTransition] = useTransition();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,24 +21,17 @@ const MessageMe = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const form = new FormData();
-    form.append("email", formData.email);
-    form.append("message", formData.message);
-    form.append("who", formData.name);
-    form.append("subject", formData.subject);
-
-    startTransition(() => {
-      sendMailAction(form).then((res) => {
-        if (res.success) {
-          setIsSubmitting(false);
-          setIsSubmitted(true);
-          setFormData({ name: "", email: "", subject: "", message: "" });
-        } else {
-          setIsSubmitting(false);
-          console.error("Error sending email:", res.error);
-        }
-      });
+    const response = await fetch("/api/send-mail", {
+      method: "POST",
+      body: JSON.stringify(formData),
     });
+    if (response.ok) {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } else {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -214,7 +204,7 @@ const MessageMe = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              placeholder="What&apos;s this about?"
+              placeholder="What's this about?"
               className="w-full px-4 py-4 rounded-lg bg-zinc-800/50 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-400/50 transition-all"
               required
             />
@@ -250,12 +240,12 @@ const MessageMe = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            disabled={isSubmitting || isSubmitted || isPending}
+            disabled={isSubmitting || isSubmitted}
             className="relative w-full py-4 bg-gradient-to-r from-orange-400 to-pink-600 text-white font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-orange-500/25 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group"
           >
             <span
               className={`inline-flex items-center gap-2 transition-all ${
-                isPending || isSubmitting ? "opacity-0" : "opacity-100"
+                isSubmitting ? "opacity-0" : "opacity-100"
               }`}
             >
               {isSubmitted ? (
@@ -294,7 +284,7 @@ const MessageMe = () => {
                 </>
               )}
             </span>
-            {(isPending || isSubmitting) && (
+            {isSubmitting && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <svg
                   className="animate-spin h-5 w-5 text-white"
