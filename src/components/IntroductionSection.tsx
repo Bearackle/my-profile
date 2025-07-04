@@ -83,7 +83,7 @@ const IntroductionSection = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-2xl font-semibold text-gray-300"
             >
-              Hi there! I'm
+              Hi there! I&apos;m
             </motion.h2>
           </div>
 
@@ -113,7 +113,7 @@ const IntroductionSection = () => {
           >
             <p className="text-lg">
               As a fourth-year student and aspiring software and data
-              engineering, I'm on a mission to create impactful solutions
+              engineering, I&apos;m on a mission to create impactful solutions
               through clean, efficient code.
             </p>
             <p>

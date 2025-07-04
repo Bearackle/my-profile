@@ -8,7 +8,7 @@ import { sendMailAction } from "@/app/send-mail";
 const MessageMe = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [isPending, startTransition] = useTransition();
+  const [_, startTransition] = useTransition();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -112,7 +112,7 @@ const MessageMe = () => {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            LET'S CREATE
+            LET&apos;S CREATE
           </motion.h2>
           <motion.h2
             className="text-6xl md:text-[80px] font-bold leading-none text-zinc-800 mb-8"
@@ -130,8 +130,8 @@ const MessageMe = () => {
             transition={{ duration: 0.6, delay: 0.7 }}
           >
             Whether you have a project in mind or just want to chat about tech,
-            I'm always excited to connect with fellow developers and potential
-            collaborators!
+            I&apos;m always excited to connect with fellow developers and
+            potential collaborators!
           </motion.p>
         </motion.div>
 
