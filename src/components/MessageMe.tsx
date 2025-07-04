@@ -8,7 +8,7 @@ import { sendMailAction } from "@/app/send-mail";
 const MessageMe = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [_, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -213,9 +213,9 @@ const MessageMe = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              placeholder="What&apos;s this about?"
+              placeholder="What's this about?"
               className="w-full px-4 py-4 rounded-lg bg-zinc-800/50 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-400/50 transition-all"
-              required  
+              required
             />
           </motion.div>
 
